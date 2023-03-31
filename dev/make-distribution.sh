@@ -117,19 +117,10 @@ if [ ! "$(command -v "$MVN")" ] ; then
     exit -1;
 fi
 
-VERSION=$("$MVN" help:evaluate -Dexpression=project.version $@ 2>/dev/null | grep -v "INFO" | tail -n 1)
-SCALA_VERSION=$("$MVN" help:evaluate -Dexpression=scala.binary.version $@ 2>/dev/null\
-    | grep -v "INFO"\
-    | tail -n 1)
-SPARK_HADOOP_VERSION=$("$MVN" help:evaluate -Dexpression=hadoop.version $@ 2>/dev/null\
-    | grep -v "INFO"\
-    | tail -n 1)
-SPARK_HIVE=$("$MVN" help:evaluate -Dexpression=project.activeProfiles -pl sql/hive $@ 2>/dev/null\
-    | grep -v "INFO"\
-    | fgrep --count "<id>hive</id>";\
-    # Reset exit status to 0, otherwise the script stops here if the last grep finds nothing\
-    # because we use "set -o pipefail"
-    echo -n)
+VERSION=2.3.4
+SCALA_VERSION=2.11.8
+SPARK_HADOOP_VERSION=3.0.0-cdh6.3.2
+SPARK_HIVE=2.1.1-cdh6.3.2
 
 if [ "$NAME" == "none" ]; then
   NAME=$SPARK_HADOOP_VERSION
